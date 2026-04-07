@@ -1,0 +1,26 @@
+# World of Warcraft Addon general
+*.tmp
+*.bak
+*.swp
+*.swo
+*.swn
+
+# IDE/editor
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Build artifacts
+dist/
+build/
+*.zip
+
+# Lua cache
+__pycache__/
+*.luac
