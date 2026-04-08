@@ -1,0 +1,50 @@
+name: Build and release addon
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'AltNotes/**'
+      - '.github/workflows/release-on-push.yml'
+      - '*.toc'
+      - '*.lua'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Build release metadata
+        id: meta
+        run: |
+          SHORT_SHA="${GITHUB_SHA::7}"
+          TAG="dev-$(date -u +'%Y%m%d-%H%M%S')-${SHORT_SHA}"
+          ZIP_NAME="AltNotes-${TAG}.zip"
+
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+          echo "zip_name=${ZIP_NAME}" >> "$GITHUB_OUTPUT"
+
+      - name: Create zip
+        uses: thedoctor0/zip-release@0.7.6
+        with:
+          type: zip
+          filename: ${{ steps.meta.outputs.zip_name }}
+          directory: .
+          path: AltNotes
+          exclusions: '*.git* .github/* README.md LICENSE'
+
+      - name: Create GitHub release and upload zip
+        run: |
+          gh release create "${{ steps.meta.outputs.tag }}" \
+            "${{ steps.meta.outputs.zip_name }}" \
+            --title "${{ steps.meta.outputs.tag }}" \
+            --notes "Automated dev build from ${GITHUB_SHA}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
