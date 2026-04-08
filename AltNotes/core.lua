@@ -9,6 +9,8 @@ AN.frame:RegisterEvent("PLAYER_MONEY")
 AN.frame:RegisterEvent("PLAYER_LEVEL_UP")
 AN.frame:RegisterEvent("TIME_PLAYED_MSG")
 
+
+-- Main event handler
 AN.frame:SetScript("OnEvent", function(_, event, ...)
     if event == "PLAYER_LOGIN" then
         AN.EnsureDB()
