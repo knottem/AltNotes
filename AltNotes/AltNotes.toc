@@ -1,0 +1,17 @@
+## Interface: 120001, 120005
+## Title: AltNotes
+## Notes: Simple alt tracker for level, gold, played time, and notes
+## Author: You
+## Version: 0.1
+## SavedVariables: AltNotesDB
+
+core.lua
+helpers.lua
+data.lua
+ui/ui_notes.lua
+ui/ui_popup.lua
+ui/ui_summary.lua
+ui/ui_rows.lua
+ui/ui_main.lua
+minimapButton.lua
+slashCommands.lua
